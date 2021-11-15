@@ -1,3 +1,6 @@
+<?php
+    $array =  ["/" =>"Главная", "php.php" =>"PHP", "" =>"Функции"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +36,13 @@
                     <div class="panel-container show">
                         <div class="panel-content">
                             <ol class="breadcrumb page-breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                                <li class="breadcrumb-item"><a href="#">PHP</a></li>
-                                <li class="breadcrumb-item active">Функции</li>
+                                <?php foreach ($array as $key => $value): ?>
+                                <?php if (!$key == ""): ?>
+                                        <li class="breadcrumb-item"><a href="<?= $key ?>"><?= $value ?></a></li>
+                                    <?php else: ?>
+                                        <li class="breadcrumb-item active"><?= $value ?></li>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
                             </ol>
                         </div>
                     </div>
