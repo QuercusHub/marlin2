@@ -1,9 +1,22 @@
 <?php
-$array = ["reports file"     => "Reports",
-          "analytics graphs" => "Analytics",
-          "export download"  => "Export",
-          "storage"          => "Storage"];
-
+$array = [
+    [
+        "tags" => "reports file",
+        "text" => "Reports",
+    ],
+    [
+        "tags" => "analytics graphs",
+        "text" => "Analytics",
+    ],
+    [
+        "tags" => "export download",
+        "text" => "Export",
+    ],
+    [
+        "tags" => "storage",
+        "text" => "Storage",
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,9 +68,9 @@ $array = ["reports file"     => "Reports",
                                 </div>
                             </div>
                             <ul id="js-list-msg" class="list-group px-2 pb-2 js-list-filter">
-                                <?php foreach ($array as $key => $value): ?>
+                                <?php foreach ($array as $value): ?>
                                     <li class="list-group-item">
-                                        <span data-filter-tags="<?= $key; ?>"><?= $value; ?></span>
+                                        <span data-filter-tags="<?= $value["tags"]; ?>"><?= $value["text"]; ?></span>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
