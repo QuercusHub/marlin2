@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,10 +36,10 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <form action="">
+                                    <form action="task_9.php" method="post">
                                         <label class="form-label" for="simpleinput">Text</label>
-                                        <input type="text" id="simpleinput" class="form-control">
-                                        <button class="btn btn-success mt-3">Submit</button>
+                                        <input name="text" type="text" id="simpleinput" class="form-control">
+                                        <button name="send" class="btn btn-success mt-3">Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -47,7 +48,18 @@
                 </div>
             </div>
         </main>
-        
+        <?php
+
+        $db = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
+        $sql = "INSERT INTO `task9` SET `text` = :text";
+
+        $text = $_POST["text"];
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':text', $text, PDO::PARAM_STR);
+        $result->execute();
+
+        ?>
 
         <script src="js/vendors.bundle.js"></script>
         <script src="js/app.bundle.js"></script>
