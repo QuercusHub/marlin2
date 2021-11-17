@@ -61,22 +61,24 @@ session_start();
 <?php
 session_start();
 $db = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
+if(isset($_POST["send"])){
+    $text = $_POST["text"];
 
-$text = $_POST["text"];
+    $stmt = $db->prepare("SELECT * FROM task9 WHERE text=:text");
+    $stmt->execute(['text' => $text]);
+    $find = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $db->prepare("SELECT * FROM task9 WHERE text=:text");
-$stmt->execute(['text' => $text]);
-$find = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!empty($find)) {
+        $_SESSION['error'] = "Ошибка";
+        header('Location: /task_10.php');
+        exit();
+    }
 
-if (!empty($find)) {
-    $_SESSION['error'] = "Ошибка";
-    header('Location: /task_10.php');
-    exit();
+    $sql = "INSERT INTO `task9` (text) VALUES (:text)";
+    $result = $db->prepare($sql);
+    $result->execute(['text' => $text]);
 }
 
-$sql = "INSERT INTO `task9` (text) VALUES (:text)";
-$result = $db->prepare($sql);
-$result->execute(['text' => $text]);
 
 ?>
 
