@@ -7,7 +7,7 @@ $password = $_POST['password'];
 $user = get_user_by_email($email);
 
 if (!$user) {
-    set_flash_message('message', 'Пользователь не найден');
+    set_flash_message('message', 'Неверный логин или пароль.');
     redirect_to('task_14.php');
 }
 
@@ -48,13 +48,12 @@ function login($email, $password)
     $user = get_user_by_email($email);
 
     if (password_verify($password, $user["password"])) {
-        $_SESSION["auth"] = true;
         $_SESSION["user"] = [
             "id" => $user["id"],
             "email" => $user["email"]
         ];
         set_flash_message('message', 'Вы успешно авторизованы');
-        redirect_to('task_14.php');
+        redirect_to('task_14_1.php');
     } else {
         set_flash_message('message', 'Не верные данные для входа');
         redirect_to('task_14.php');

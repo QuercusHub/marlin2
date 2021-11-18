@@ -26,7 +26,7 @@ session_start();
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
                 <h2>
-                    Задание | <?= $_SESSION["user"]["email"]; ?>
+                    Задание
                 </h2>
                 <div class="panel-toolbar">
                     <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse"
