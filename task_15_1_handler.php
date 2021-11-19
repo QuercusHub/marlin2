@@ -12,10 +12,31 @@ if (isset($_POST['send']) && $_POST['send'] == 'btn') {
     $result->execute();
 
 
-    header('Location: task_15.php');
+    header('Location: task_15_1.php');
     exit();
 }
-//header('Location: task_15.php');
+
+if (isset($_GET['id'])){
+    $db = getConnection();
+
+    $db = getConnection();
+    $sql = 'SELECT * FROM images WHERE id = :id';
+
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+
+    $result->execute();
+    $result->fetch();
+
+
+
+    $sql = "DELETE FROM images WHERE id = :id";
+    $result = $db->prepare($sql);
+    $result->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+    $result->execute();
+    header('Location: task_15_1.php');
+    exit();
+}
 
 function getConnection()
 {

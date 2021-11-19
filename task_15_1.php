@@ -42,7 +42,7 @@ $images = view_images();
                     <div class="panel-content">
                         <div class="panel-content">
                             <div class="form-group">
-                                <form action="task_15_handler.php" method="post" enctype="multipart/form-data">
+                                <form action="task_15_1_handler.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label class="form-label" for="simpleinput">Image</label>
                                         <input name="img" type="file" id="simpleinput" class="form-control">
@@ -75,7 +75,8 @@ $images = view_images();
                             <div class="row">
                                 <?php foreach ($images as $image): ?>
                                     <div class="col-md-3 image" style="width: 100%">
-                                        <img style="width: 100%" src="<?= $image["image"]; ?> ">
+                                        <img style="width: 100%; height: auto" src="<?= $image["image"]; ?> ">
+                                        <a name="delete" class="btn btn-danger" href="task_15_1_handler.php?id=<?= $image['id'] ?>" onclick="confirm('Вы уверены?');">Удалить</a>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
