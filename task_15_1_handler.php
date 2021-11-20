@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+//загрузка изображения
 if (isset($_POST['send']) && $_POST['send'] == 'btn') {
     $image = 'uploads/' . time() . $_FILES["img"]["name"];
     move_uploaded_file($_FILES["img"]["tmp_name"], $image);
@@ -11,31 +12,33 @@ if (isset($_POST['send']) && $_POST['send'] == 'btn') {
     $result->bindParam(':image', $image, PDO::PARAM_STR);
     $result->execute();
 
-
     header('Location: task_15_1.php');
     exit();
 }
-
+//удаление изображения
 if (isset($_GET['id'])){
-    $db = getConnection();
+
+    $id_image = $_GET['id'];
 
     $db = getConnection();
     $sql = 'SELECT * FROM images WHERE id = :id';
+//ищем изображение по id и возвращаем строку пути изоюбражения в виде массива
+    $sth = $db->prepare($sql);
+    $sth->bindParam(':id', $id_image, PDO::PARAM_INT);
+    $sth->execute();
+    $result = $sth->fetch();
 
-    $result = $db->prepare($sql);
-    $result->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+    //..удаляем файл с сервера
+    unlink($result['image']);
 
-    $result->execute();
-    $result->fetch();
-
-
-
+    //..удаляем файл с базы данных
     $sql = "DELETE FROM images WHERE id = :id";
-    $result = $db->prepare($sql);
-    $result->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
-    $result->execute();
-    header('Location: task_15_1.php');
-    exit();
+    $sth = $db->prepare($sql);
+    $sth->bindParam(':id', $id_image, PDO::PARAM_INT);
+    $sth->execute();
+
+    set_flash_message('message', 'Файл успешно удален!');
+    redirect_to('task_15_1.php');
 }
 
 function getConnection()
@@ -66,4 +69,16 @@ function view_images(){
     $result->execute();
 
     return $result->fetchAll();
+}
+
+function set_flash_message($name, $message)
+{
+    $_SESSION[$name] = $message;
+
+}
+
+function redirect_to($path)
+{
+    header('Location: ' . $path);
+    exit();
 }

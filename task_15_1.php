@@ -42,6 +42,12 @@ $images = view_images();
                     <div class="panel-content">
                         <div class="panel-content">
                             <div class="form-group">
+                                <?php
+                                if (isset($_SESSION['message'])) {
+                                    echo '<div class="alert alert-danger fade show" role="alert">' . $_SESSION["message"] . '</div>';
+                                }
+                                unset($_SESSION['message']);
+                                ?>
                                 <form action="task_15_1_handler.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label class="form-label" for="simpleinput">Image</label>
