@@ -1,21 +1,27 @@
 <?php
 
-if (!empty($_FILES)) {
-    $image = 'uploads/' . time() . $_FILES['img']['name'];
-    move_uploaded_file($_FILES['img']['tmp_name'], $image);
+if (isset($_FILES['img']['name'])) {
+    $total = count($_FILES['img']['name']);
 
-    $db = getConnection();
-    $sql = "INSERT INTO `images` SET image = :image";
+    for ($i = 0; $i < $total; $i++) {
+        if (isset($_FILES['img']['name'][$i])) {
+            $target = 'uploads/' . time() .'_'. $_FILES['img']['name'][$i];
+            $tmp = $_FILES['img']['tmp_name'][$i];
+            move_uploaded_file($tmp, $target);
 
-    $result = $db->prepare($sql);
-    $result->bindParam(':image', $image, PDO::PARAM_STR);
-    $result->execute();
+            $db = getConnection();
+            $sql = "INSERT INTO `images` SET image = :image";
+            $result = $db->prepare($sql);
+            $result->bindParam(':image', $target, PDO::PARAM_STR);
+            $result->execute();
 
 
-    header('Location: task_15.php');
+        }
+    }
+    header('Location: task_15_2.php');
     exit();
 }
-//header('Location: task_15.php');
+
 
 function getConnection()
 {
@@ -35,7 +41,8 @@ function getConnection()
     return $db;
 }
 
-function view_images(){
+function view_images()
+{
 
     $db = getConnection();
     $sql = 'SELECT * FROM images';
