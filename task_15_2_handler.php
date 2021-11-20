@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_FILES['img']['name'])) {
+if (!empty($_FILES)) {
     $total = count($_FILES['img']['name']);
 
     for ($i = 0; $i < $total; $i++) {

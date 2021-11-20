@@ -1,7 +1,7 @@
 <?php
 session_start();
 //загрузка изображения
-if (isset($_POST['send']) && $_POST['send'] == 'btn') {
+if (!empty($_FILES)) {
     $image = 'uploads/' . time() . $_FILES["img"]["name"];
     move_uploaded_file($_FILES["img"]["tmp_name"], $image);
 
